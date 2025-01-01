@@ -1,0 +1,6 @@
+{
+  "dependencies": {
+    "@sefinek/rot47": "^1.0.5",
+    "open": "^10.1.0"
+  }
+}
