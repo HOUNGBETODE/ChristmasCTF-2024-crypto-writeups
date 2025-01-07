@@ -4,4 +4,6 @@
 
 - The previous output was nothing more than the base64 encoding of a PNG image.
 
+![alt output flag](wu-fol/output.png)
+
 - Flag was : **CMCTF{ng1_y0u_4m4z1ng_450f9e747e8ffa}**.
