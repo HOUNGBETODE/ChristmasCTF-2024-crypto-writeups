@@ -1,22 +1,23 @@
-# here we convert back the image to it's pixels array
 from skimage.io import imread
-flag_pixels_array = imread("flag.png")
 
-# only two pixels appears : [0 0 0] and [255 255 255] are found
-# this is a clue for binary stuff
-# surely [0 0 0] probes for 1 and [255 255 255] probes for 0, or vice versa
-# let's pursue with the first hypothesis : [0 0 0] => 1 and [255 255 255] = 0
-# with this is mind, let's extract the binary content obfuscated
-import numpy as np
-bin_digits = ""
-for array_2d in flag_pixels_array:
-    for pixel in array_2d:
-        bin_digits += "0" if np.array_equal(pixel, np.array([255,255,255])) else "1"
+# here we convert back the image to it's pixels array
+flag_pixels_array = (
+    imread(fname="./files/flag.png", as_gray=True)
+    .astype(int)
+)
 
-# now we try to decode that binary sequence to see whether it's understandable
-bin2char = ""
-for i in range(0, len(bin_digits), 8):
-    bin2char += chr(int(bin_digits[i:i+8], 2))
+# only two values appear: 0 and 1 are found
+# this is a clue to the binary stuff
+# decoding the binary sequence as it was doesn't give us anything significant (®ÏÎ“ ©º¥È±Í§Ì”±±§¾ºÌ§½§Ï±¹¸ÏÏ±©ÇÏ¦½Î±ÎÆ±-¶µÇÎ"²¨Ê®ÂÂÂ)
+# let's try to invert each bit by repeating the decoding process
+bin2char = (
+    "".join(
+        chr(
+            int("".join([str(bit) for bit in bits]), 2)
+        ) 
+        for bits in 1-flag_pixels_array
+    )
+)
 
 # we got something very close to base64 encoding
 # let's decode it to see whether it's worth our while doing
